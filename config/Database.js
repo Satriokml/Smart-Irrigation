@@ -8,7 +8,7 @@ const user = process.env.DB_USER
 const pass = process.env.DB_PASS
 
 const db = new Sequelize(name, user, pass, {
-    host: host,//"mysql-irrigaitonsys-satriokamil3-c798.a.aivencloud.com",
+    host: host,
     dialect: "mysql",
     port: process.env.DB_PORT,
     timezone: '+07:00'

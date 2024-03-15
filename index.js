@@ -8,11 +8,10 @@ import { Sequelize } from "sequelize";
 import IrrigationDataModel from "./models/IrrigationDataModel.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3030;
 
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3000'
 }));
 
 

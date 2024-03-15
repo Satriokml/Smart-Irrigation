@@ -1,5 +1,6 @@
 import db from "./config/Database.js";
 import express from "express";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import IrrigationRoute from "./routes/IrrigationRoute.js";
 import cors from "cors";

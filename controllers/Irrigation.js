@@ -30,7 +30,7 @@ export const getWeather = async(req, res) =>{
         });
 
         const weatherData = response.data;
-        res.send(weatherData.current.condition.text);
+        res.json(weatherData.current.condition);
       } catch (error) {
 
         console.error('Error fetching weather data:', error);

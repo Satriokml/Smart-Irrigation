@@ -16,6 +16,18 @@ export const getData = async(req, res) =>{
     }
 }
 
+export const getLastest = async(req, res) =>{
+    try {
+        let response;
+        response = await IrrigationDataModel.findOne({
+            order:[['id', 'DESC']]
+        });
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
 export const getWeather = async(req, res) =>{
     try {
         const latitude = process.env.latitude;

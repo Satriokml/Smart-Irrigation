@@ -3,7 +3,8 @@ import {
     getData,
     createData,
     getWeather,
-    getLastest
+    getLastest,
+    getLastestCWSI
 } from "../controllers/Irrigation.js";
 
 import {
@@ -17,10 +18,16 @@ const router = express.Router();
 
 router.get('/data',getData);
 router.get('/lastest',getLastest);
+router.get('/lastest_cwsi',getLastestCWSI);
 router.post('/data',createData);
+
+
+
 router.get('/data2',getData2);
 router.get('/lastest2',getLastest2);
 router.post('/data2',createData2);
+
+
 router.get('/weather',getWeather);
 
 

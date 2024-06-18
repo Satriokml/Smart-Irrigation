@@ -28,6 +28,20 @@ export const getLastest = async(req, res) =>{
     }
 }
 
+export const getLastestCWSI = async(req, res) =>{
+    try {
+        let response;
+        response = await IrrigationDataModel.findAll({
+            attributes: ['cwsi'],
+            order:[['id', 'DESC']],
+            limit:10
+        });
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
 export const getWeather = async(req, res) =>{
     try {
         const latitude = process.env.latitude;

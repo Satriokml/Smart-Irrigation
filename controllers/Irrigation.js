@@ -32,7 +32,7 @@ export const getLastestCWSI = async(req, res) =>{
     try {
         let response;
         response = await IrrigationDataModel.findAll({
-            attributes: ['cwsi'],
+            attributes: ['cwsi', 'createdAt'],
             order:[['id', 'DESC']],
             limit:10
         });

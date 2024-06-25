@@ -66,15 +66,27 @@ export const getWeather = async(req, res) =>{
 }
 
 export const createData = async(req, res) =>{
-    const {canopy_temperature, air_temperature, soil_moisture, relative_humidity, cwsi, weather_prediction, decision} = req.body;
+    const {canopy_temperature, air_temperature, soil_moisture, relative_humidity, cwsi, decision} = req.body;
     try {
+        const latitude = process.env.latitude;
+        const longitude = process.env.longitude;
+
+        const response = await axios.get(WEATHER_API_URL, {
+          params: {
+            key: WEATHER_API_KEY,
+            q: `${latitude},${longitude}`,
+            aqi: 'no'
+          }
+        });
+
+        const weatherData = response.data;
         await IrrigationDataModel.create({
             canopy_temperature:canopy_temperature,
             air_temperature:air_temperature,
             soil_moisture:soil_moisture,
             relative_humidity:relative_humidity,
             cwsi : cwsi,
-            weather_prediction:weather_prediction,
+            weather_prediction:weatherData.current.condition.text,
             decision:decision
 
         });

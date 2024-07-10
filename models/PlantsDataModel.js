@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-import PlantActiveDataModel from "./PlantActiveDataModel.js";
+
 
 const {DataTypes} = Sequelize;
 
@@ -14,13 +14,21 @@ const PlantsDataModel = db.define('plants_data',{
         type: DataTypes.STRING,
         allowNull: false,
     },
-    upper_baseline:{
+    intercept:{
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-    lower_baseline:{
+    slope:{
         type: DataTypes.FLOAT,
         allowNull: false,
+    },
+    tdry:{
+        type: DataTypes.FLOAT,
+        allowNull:true
+    },
+    tnws:{
+        type: DataTypes.FLOAT,
+        allowNull:true
     }
 },
 {

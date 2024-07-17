@@ -20,5 +20,6 @@ const PlantActiveDataModel = db.define('plant_active',{
 });
 
 PlantActiveDataModel.belongsTo(PlantsDataModel, { foreignKey: 'plant_data_id' });
+PlantsDataModel.hasMany(PlantActiveDataModel, { foreignKey: 'plant_data_id' });
 
 export default PlantActiveDataModel;

@@ -13,7 +13,12 @@ import {
     getLastest2
 } from "../controllers/Irrigation2.js";
 
-import { getBaseline, updatePlantActive } from "../controllers/Data.js";
+import {
+    getBaseline,
+    updatePlantActive,
+    getLocation,
+    updateLocation
+} from "../controllers/Data.js";
 
 
 const router = express.Router();
@@ -32,6 +37,9 @@ router.get('/baseline',getBaseline);
 router.patch('/plant', updatePlantActive);
 
 router.get('/weather',getWeather);
+
+router.get('/location',getLocation);
+router.patch('/location',updateLocation);
 
 
 export default router;

@@ -51,8 +51,11 @@ export const getLastestCWSI = async(req, res) =>{
 
 export const getWeather = async(req, res) =>{
     try {
-        const latitude = process.env.latitude;
-        const longitude = process.env.longitude;
+        const latlong = await axios.get("https://irrigationapi-production.up.railway.app/location");
+        const location = latlong.data
+
+        const latitude = location.latitude;
+        const longitude = location.longitude;
 
         const response = await axios.get(WEATHER_API_URL, {
           params: {
@@ -75,26 +78,23 @@ export const getWeather = async(req, res) =>{
 export const createData = async(req, res) =>{
     const {canopy_temperature, air_temperature, soil_moisture, relative_humidity, cwsi, decision} = req.body;
     try {
-        const response = await axios.get(WEATHER_API_URL, {
-          params: {
-            key: WEATHER_API_KEY,
-            q: `${latitude},${longitude}`,
-            aqi: 'no'
-          }
-        });
+        const response = await axios.get("https://irrigationapi-production.up.railway.app/weather");
 
         const weatherData = response.data;
-        await IrrigationDataModel.create({
-            canopy_temperature:canopy_temperature,
-            air_temperature:air_temperature,
-            soil_moisture:soil_moisture,
-            relative_humidity:relative_humidity,
-            cwsi : cwsi,
-            weather_prediction:weatherData.current.condition.text,
-            decision:decision
-
-        });
-        res.status(201).json({msg: "Post Created Successfuly"});
+        if (weatherData && weatherData.condition) {
+            await IrrigationDataModel.create({
+                canopy_temperature: canopy_temperature,
+                air_temperature: air_temperature,
+                soil_moisture: soil_moisture,
+                relative_humidity: relative_humidity,
+                cwsi: cwsi,
+                weather_prediction: weatherData.condition.text, // corrected this line
+                decision: decision
+            });
+            res.status(201).json({ msg: "Post Created Successfully" });
+        } else {
+            throw new Error("Invalid weather data format");
+        }
     } catch (error) {
         res.status(500).json({msg: error.message});
     }

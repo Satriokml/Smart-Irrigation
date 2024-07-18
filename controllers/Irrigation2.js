@@ -34,28 +34,24 @@ export const getLastest2 = async(req, res) =>{
 export const createData2 = async(req, res) =>{
     const {canopy_temperature, air_temperature, soil_moisture, relative_humidity, cwsi, decision} = req.body;
     try {
-        const response = await axios.get(WEATHER_API_URL, {
-          params: {
-            key: WEATHER_API_KEY,
-            q: `${latitude},${longitude}`,
-            aqi: 'no'
-          }
-        });
+        const response = await axios.get("https://irrigationapi-production.up.railway.app/weather");
 
         const weatherData = response.data;
-        await IrrigationDataModel2.create({
-            canopy_temperature:canopy_temperature,
-            air_temperature:air_temperature,
-            soil_moisture:soil_moisture,
-            relative_humidity:relative_humidity,
-            cwsi : cwsi,
-            weather_prediction:weatherData.current.condition.text,
-            decision:decision
-
-        });
-        res.status(201).json({msg: "Post Created Successfuly"});
+        if (weatherData && weatherData.condition) {
+            await IrrigationDataModel2.create({
+                canopy_temperature: canopy_temperature,
+                air_temperature: air_temperature,
+                soil_moisture: soil_moisture,
+                relative_humidity: relative_humidity,
+                cwsi: cwsi,
+                weather_prediction: weatherData.condition.text,
+                decision: decision
+            });
+            res.status(201).json({ msg: "Post Created Successfully" });
+        } else {
+            throw new Error("Invalid weather data format");
+        }
     } catch (error) {
         res.status(500).json({msg: error.message});
     }
 }
-

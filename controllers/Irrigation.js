@@ -1,22 +1,26 @@
 import IrrigationDataModel from "../models/IrrigationDataModel.js";
+import PlantsDataModel from "../models/PlantsDataModel.js";
 import axios from "axios";
 
 
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 const WEATHER_API_URL = process.env.WEATHER_API_URL;
-const latitude = process.env.latitude;
-const longitude = process.env.longitude;
+
 
 //Export fungsi agar bisa digunakan di bagian lain
 export const getData = async(req, res) =>{
     try {
         let response;
-        //Ambil semua data yang ada di tabel irrigation data
-        response = await IrrigationDataModel.findAll();
-        //Menyajikan data dalam bentuk json
+        response = await IrrigationDataModel.findAll({
+            //include: [
+              //  {
+                //  model: PlantsDataModel,
+                  //attributes: ['name']
+                //}
+              //]
+        });
         res.status(200).json(response);
     } catch (error) {
-        //Menampilkan keterangan jika terjadi error
         res.status(500).json({msg: error.message});
     }
 }
@@ -25,7 +29,13 @@ export const getLastest = async(req, res) =>{
     try {
         let response;
         response = await IrrigationDataModel.findOne({ //hanya mengambil satu data
-            order:[['id', 'DESC']] //diurutkan berdasarkan id dari yang terbesar
+            order:[['id', 'DESC']], //diurutkan berdasarkan id dari yang terbesar
+            //include: [
+              //  {
+                //  model: PlantsDataModel,
+                  //attributes: ['name']
+                //}
+              //]
         });
         res.status(200).json(response);
     } catch (error) {
@@ -79,6 +89,7 @@ export const createData = async(req, res) =>{
     const {canopy_temperature, air_temperature, soil_moisture, relative_humidity, cwsi, decision} = req.body;
     try {
         const response = await axios.get("https://irrigationapi-production.up.railway.app/weather");
+        const plant = await axios.get("http://localhost:3030/baseline");
 
         const weatherData = response.data;
         if (weatherData && weatherData.condition) {
@@ -88,8 +99,9 @@ export const createData = async(req, res) =>{
                 soil_moisture: soil_moisture,
                 relative_humidity: relative_humidity,
                 cwsi: cwsi,
-                weather_prediction: weatherData.condition.text, // corrected this line
-                decision: decision
+                weather_prediction: weatherData.condition.text,
+                decision: decision,
+                plant_data_id: plant.data[0].id
             });
             res.status(201).json({ msg: "Post Created Successfully" });
         } else {

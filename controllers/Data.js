@@ -9,7 +9,7 @@ export const getBaseline = async(req, res) =>{
             include: [
               {
                 model: PlantsDataModel,
-                attributes: ['name', 'intercept', 'slope', 'tdry', 'tnws']
+                attributes: ['id','name', 'intercept', 'slope', 'tdry', 'tnws']
               }
             ],
             attributes: ['id']

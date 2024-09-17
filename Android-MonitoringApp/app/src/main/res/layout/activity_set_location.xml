@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".SetLocation"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/textView_lat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Latitude" />
+
+            <EditText
+                android:id="@+id/editText_lat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="5"
+                android:ems="10"
+                android:maxLength="10"
+                android:digits="0123456789.-"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/textView_long"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Longitude" />
+
+            <EditText
+                android:id="@+id/editText_long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="5"
+                android:ems="10"
+                android:maxLength="10"
+                android:digits="0123456789.-"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="5">
+
+
+            <ImageButton
+                android:id="@+id/btn_location"
+                android:layout_width="60dp"
+                android:layout_height="61dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/location" />
+
+            <Button
+                android:id="@+id/button_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="confirm" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:text="Status" />
+
+
+
+</LinearLayout>
